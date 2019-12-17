@@ -3,6 +3,7 @@ package libcontainer
 import (
 	"fmt"
 	"io"
+	"reflect"
 	"text/template"
 	"time"
 
@@ -60,7 +61,7 @@ func createSystemError(err error, cause string) Error {
 		Cause:     cause,
 		Stack:     stacktrace.Capture(2),
 	}
-	if err != nil {
+	if err != nil && !reflect.ValueOf(err).IsNil() {
 		gerr.Message = err.Error()
 	}
 	return gerr
